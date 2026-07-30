@@ -21,7 +21,7 @@ public class AdminController {
     @Autowired
     private journalEntryService journalEntryService;
 
-    @GetMapping("/all-users")
+    @GetMapping("/users")
     public ResponseEntity<?> getAllUsers() {
         List<User> all = userService.getAll();
         if (all != null && !all.isEmpty()) {
@@ -40,7 +40,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/all-journals")
+    @GetMapping("/journals")
     public ResponseEntity<?> getAllJournals() {
         List<JournalEntry> all = journalEntryService.getAll();
         if (all != null && !all.isEmpty()) {
