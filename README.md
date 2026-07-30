@@ -203,12 +203,3 @@ spring.mongodb.auto-index-creation=true
 3. The server will start on `http://localhost:8080`.
 
 ---
-
-## 🔑 Initial Admin Credentials
-
-> [!IMPORTANT]
-> On application startup, `AdminUserInitializer` automatically creates a default administrator account if one does not exist:
-
-- 👤 **Username**: `Psyko`
-- 🔑 **Password**: `psyko7`
-- 🛡️ **Roles**: `ADMIN`, `USER`
