@@ -5,10 +5,7 @@ import com.firstLearning.journalPrototype.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/weather")
@@ -18,7 +15,12 @@ public class WeatherCheck {
     private WeatherService weatherService;
 
     @GetMapping
-    public ResponseEntity<?> weatherInfo(@RequestParam(value = "city", defaultValue = "Jharkhand") String city) {
+    public ResponseEntity<?> defaultWeather() {
+        return weatherInfo("Jharkhand");
+    }
+
+    @GetMapping("/{city}")
+    public ResponseEntity<?> weatherInfo(@PathVariable String city) {
         WeatherResponse response = weatherService.getWeather(city);
         if (response != null) {
             return new ResponseEntity<>(response, HttpStatus.OK);

@@ -18,7 +18,8 @@ public class WeatherService {
     public WeatherResponse getWeather(String city) {
         try {
             String finalApiUrl = WEATHER_API_URL.replace("API_KEY", API_KEY);
-            ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApiUrl, HttpMethod.GET, null, WeatherResponse.class, city);
+            ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalApiUrl, HttpMethod.GET,
+                    null, WeatherResponse.class, city);
             return response.getBody();
         } catch (Exception e) {
             return null;
