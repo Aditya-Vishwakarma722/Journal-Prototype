@@ -9,19 +9,33 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class AppCache {
+
     @Autowired
     private ConfigJournalRepository configJournalRepository;
 
-    public Map<String, String> APP_CACHE = new HashMap<>();
+    public Map<String, String> APP_CACHE = new ConcurrentHashMap<>();
 
     @PostConstruct
-    public void init(){
+    public void init() {
         List<ConfigJournalEntity> list = configJournalRepository.findAll();
-        for(ConfigJournalEntity configJournalEntity : list){
-            APP_CACHE.put(configJournalEntity.getKey(),configJournalEntity.getValue());
+        Map<String, String> tempCache = new HashMap<>();
+        for (ConfigJournalEntity configJournalEntity : list) {
+            String key = configJournalEntity.getKey() != null ? configJournalEntity.getKey() : configJournalEntity.getName();
+            String value = configJournalEntity.getValue() != null ? configJournalEntity.getValue() : configJournalEntity.getKeyID();
+            if (key != null && value != null) {
+                tempCache.put(key, value);
+            }
         }
+        APP_CACHE.clear();
+        APP_CACHE.putAll(tempCache);
+    }
+
+    public String get(String key) {
+        return APP_CACHE.get(key);
     }
 }
+

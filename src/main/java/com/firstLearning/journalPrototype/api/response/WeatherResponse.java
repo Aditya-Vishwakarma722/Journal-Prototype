@@ -10,9 +10,19 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeatherResponse {
 
+    private boolean success = true;
+    private Error error;
     private Request request;
     private Location location;
     private Current current;
+
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Error {
+        private int code;
+        private String type;
+        private String info;
+    }
 
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)

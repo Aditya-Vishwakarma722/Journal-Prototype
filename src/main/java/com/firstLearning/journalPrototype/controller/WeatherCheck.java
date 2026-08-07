@@ -16,16 +16,20 @@ public class WeatherCheck {
 
     @GetMapping
     public ResponseEntity<?> defaultWeather() {
-        return weatherInfo("Jharkhand");
+        return weatherInfo("Ranchi");
     }
 
     @GetMapping("/{city}")
     public ResponseEntity<?> weatherInfo(@PathVariable String city) {
+        if (city == null || city.trim().isEmpty()) {
+            city = "Ranchi";
+        }
         WeatherResponse response = weatherService.getWeather(city);
-        if (response != null) {
+        if (response != null && response.getCurrent() != null) {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Weather information could not be retrieved for city: " + city, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
+
